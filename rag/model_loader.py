@@ -2,26 +2,22 @@
 
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-
+torch.cuda.empty_cache()
 
 def load_llm_model():
     model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
-    use_quantization_config = False
-    attn_implementation = "sdpa"
-
     print(f"[INFO] Using model_id: {model_id}")
-    print(f"[INFO] Using attention implementation: {attn_implementation}")
 
     tokenizer = AutoTokenizer.from_pretrained(model_id)
 
+    torch.cuda.empty_cache()
+
     llm_model = AutoModelForCausalLM.from_pretrained(
         model_id,
-        torch_dtype=torch.float32,
-        device_map=None,
-        attn_implementation=attn_implementation
-    )
+        torch_dtype=torch.float16
+    ).to("cuda")
 
-    print("Model loaded successfully")
+    print("Model loaded on:", next(llm_model.parameters()).device)
 
     return tokenizer, llm_model
