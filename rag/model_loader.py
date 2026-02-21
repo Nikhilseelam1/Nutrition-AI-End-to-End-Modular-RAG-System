@@ -5,7 +5,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
 def load_llm_model():
-    model_id = "google/gemma-2b-it"
+    model_id = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+
     use_quantization_config = False
     attn_implementation = "sdpa"
 
@@ -16,8 +17,8 @@ def load_llm_model():
 
     llm_model = AutoModelForCausalLM.from_pretrained(
         model_id,
-        torch_dtype=torch.float16,
-        device_map="auto",
+        torch_dtype=torch.float32,
+        device_map=None,
         attn_implementation=attn_implementation
     )
 

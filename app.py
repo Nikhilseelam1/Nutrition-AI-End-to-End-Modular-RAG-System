@@ -1,14 +1,12 @@
 # app.py
-
 import streamlit as st
 
 from rag.pipeline import ask
 import main
 
-
 st.set_page_config(page_title="RAG Chatbot", layout="wide")
 
-st.title("📘 Nutrition RAG Chatbot")
+st.title("Nutrition RAG Chatbot")
 
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []

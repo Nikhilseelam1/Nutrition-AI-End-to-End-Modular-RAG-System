@@ -5,18 +5,23 @@ from rag.index import build_faiss_index
 from rag.reranker import load_reranker
 from rag.pdf_downloader import download_pdf_if_not_exists
 from rag.model_loader import load_llm_model
+import os
+from rag.sentence_splitter import add_sentences_to_pages
 
-pdf_path = "human-nutrition-text.pdf"
-url = "https://pressbooks.oer.hawaii.edu/humannutrition/wp-content/uploads/sites/3/2020/07/Human-Nutrition-2020.pdf"
 
-download_pdf_if_not_exists(pdf_path, url)
+
+pdf_path = "data/human-nutrition-text.pdf"
+num_sentence_chunk_size = 10
+
 pages_and_texts = load_pdf(pdf_path)
 
-num_sentence_chunk_size = 10
+pages_and_texts = add_sentences_to_pages(pages_and_texts)
+
 pages_and_texts = create_sentence_chunks(
     pages_and_texts,
     num_sentence_chunk_size
 )
+
 
 pages_and_chunks = []
 for item in pages_and_texts:

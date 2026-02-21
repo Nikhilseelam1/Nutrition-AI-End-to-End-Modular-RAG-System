@@ -1,7 +1,6 @@
 import os
 import requests
 
-
 def download_pdf_if_not_exists(pdf_path, url):
     if not os.path.exists(pdf_path):
         print("[INFO] File doesn't exist, downloading...")

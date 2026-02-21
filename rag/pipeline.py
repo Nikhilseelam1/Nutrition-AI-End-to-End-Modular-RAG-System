@@ -1,8 +1,8 @@
 # rag/pipeline.py
 
-from retreval import retrieve_relevant_resources
-from reranker import rerank_results
-from generation import generate_answer
+from rag.retreval import retrieve_relevant_resources
+from rag.reranker import rerank_results
+from rag.generation import generate_answer
 
 
 def ask(
@@ -18,7 +18,6 @@ def ask(
     max_new_tokens,
     temperature
 ):
-    # Step 1: Retrieval
     scores, indices, context_items = retrieve_relevant_resources(
         query=query,
         embedding_model=embedding_model,
@@ -27,7 +26,6 @@ def ask(
         top_k=top_k_retrieval
     )
 
-    # Step 2: Reranking
     reranked_contexts = rerank_results(
         query=query,
         context_items=context_items,
